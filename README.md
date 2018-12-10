@@ -58,8 +58,6 @@ Please see the [Setup Page](https://github.com/jagrosh/MusicBot/wiki/Setup) in t
 ## 예시
 ![Example](https://i.imgur.com/tevrtKt.png)
 
-![예시](https://i.imgur.com/tevrtKt.png)
-
 ## Editing
 ## 편집
 This bot (and the source code here) is not meant to be edited. The main purpose of having the source public is to show the capabilities of the libraries, and to allow others to understand how the bot works. There are many requirements and dependencies required to edit and compile it, and there will not be support provided for people looking to make changes on their own. Instead, consider making a feature request (see the above section). If you still choose to make edits, please do so in accordance with the Apache 2.0 License.

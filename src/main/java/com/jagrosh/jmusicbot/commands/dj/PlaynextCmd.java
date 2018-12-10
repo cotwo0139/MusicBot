@@ -41,7 +41,7 @@ public class PlaynextCmd extends DJCommand
         this.loadingEmoji = loadingEmoji;
         this.name = "playnext";
         this.arguments = "<제목|주소>";
-        this.aliases = new String[]{"pn"};
+        this.aliases = new String[]{"pn","다음곡","ekdmarhr"};
         this.help = "바로 다음에 재생할 곡을 신청해요!";
         this.beListening = true;
         this.bePlaying = false;

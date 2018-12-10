@@ -33,7 +33,7 @@ public class NowplayingCmd extends MusicCommand
         super(bot);
         this.name = "nowplaying";
         this.help = "현재 재생중인 노래의 정보를 보여드려요!";
-        this.aliases = new String[]{"np","current"};
+        this.aliases = new String[]{"np","current","ㅞ","쳑ㄱ둣","ㅜㅐ제ㅣ묘ㅑㅜㅎ"};
         this.botPermissions = new Permission[]{Permission.MESSAGE_EMBED_LINKS};
     }
 

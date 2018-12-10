@@ -55,6 +55,7 @@ public class PlayCmd extends MusicCommand
         this.arguments = "<제목|주소|다른 명령어>";
         this.help = "노래를 재생해요!";
         this.beListening = true;
+        this.aliases = new String[]{"ㅔㅣ묘","재생","노래","플래이","플레이","wotod","vmffodl","vmffpdl","shfo"};
         this.bePlaying = false;
         this.children = new Command[]{new PlaylistCmd(bot)};
     }
@@ -221,7 +222,7 @@ public class PlayCmd extends MusicCommand
         {
             super(bot);
             this.name = "playlist";
-            this.aliases = new String[]{"pl"};
+            this.aliases = new String[]{"pl","ㅔㅣ묘ㅣㅑㄴㅅ","ㅔㅣ"};
             this.arguments = "<이름>";
             this.help = "제공된 재생 목록을 재생해요!";
             this.beListening = true;

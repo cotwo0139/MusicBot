@@ -15,25 +15,54 @@
  */
 package com.jagrosh.jmusicbot;
 
+import javax.security.auth.login.LoginException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
-import com.jagrosh.jdautilities.examples.command.*;
-import com.jagrosh.jmusicbot.commands.admin.*;
-import com.jagrosh.jmusicbot.commands.dj.*;
+import com.jagrosh.jmusicbot.commands.admin.SetdjCmd;
+import com.jagrosh.jmusicbot.commands.admin.SettcCmd;
+import com.jagrosh.jmusicbot.commands.admin.SetvcCmd;
+import com.jagrosh.jmusicbot.commands.dj.ForceskipCmd;
+import com.jagrosh.jmusicbot.commands.dj.PauseCmd;
+import com.jagrosh.jmusicbot.commands.dj.PlaynextCmd;
+import com.jagrosh.jmusicbot.commands.dj.RepeatCmd;
+import com.jagrosh.jmusicbot.commands.dj.SkiptoCmd;
+import com.jagrosh.jmusicbot.commands.dj.StopCmd;
+import com.jagrosh.jmusicbot.commands.dj.VolumeCmd;
 import com.jagrosh.jmusicbot.commands.general.*;
-import com.jagrosh.jmusicbot.commands.music.*;
-import com.jagrosh.jmusicbot.commands.owner.*;
+import com.jagrosh.jmusicbot.commands.music.LyricsCmd;
+import com.jagrosh.jmusicbot.commands.music.NowplayingCmd;
+import com.jagrosh.jmusicbot.commands.music.PlayCmd;
+import com.jagrosh.jmusicbot.commands.music.PlaylistsCmd;
+import com.jagrosh.jmusicbot.commands.music.QueueCmd;
+import com.jagrosh.jmusicbot.commands.music.RemoveCmd;
+import com.jagrosh.jmusicbot.commands.music.SCSearchCmd;
+import com.jagrosh.jmusicbot.commands.music.SearchCmd;
+import com.jagrosh.jmusicbot.commands.music.ShuffleCmd;
+import com.jagrosh.jmusicbot.commands.music.SkipCmd;
+import com.jagrosh.jmusicbot.commands.owner.AutoplaylistCmd;
+import com.jagrosh.jmusicbot.commands.owner.EvalCmd;
+import com.jagrosh.jmusicbot.commands.owner.PlaylistCmd;
+import com.jagrosh.jmusicbot.commands.owner.SetavatarCmd;
+import com.jagrosh.jmusicbot.commands.owner.SetgameCmd;
+import com.jagrosh.jmusicbot.commands.owner.SetnameCmd;
+import com.jagrosh.jmusicbot.commands.owner.SetstatusCmd;
+import com.jagrosh.jmusicbot.commands.owner.ShutdownCmd;
 import com.jagrosh.jmusicbot.entities.Prompt;
 import com.jagrosh.jmusicbot.gui.GUI;
 import com.jagrosh.jmusicbot.settings.SettingsManager;
 import com.jagrosh.jmusicbot.utils.OtherUtil;
-import java.awt.Color;
-import javax.security.auth.login.LoginException;
-import net.dv8tion.jda.core.*;
+
+import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.OnlineStatus;
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Game;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -82,13 +111,6 @@ public class JMusicBot
         SettingsManager settings = new SettingsManager();
         Bot bot = new Bot(waiter, config, settings);
         
-        AboutCommand aboutCommand = new AboutCommand(Color.BLUE.brighter(),
-                                "이 뮤직 봇은 한글화 되었어요! 원 제작 소스는 [클릭해주세요](https://github.com/jagrosh/MusicBot) (v"+version+")",
-                                new String[]{"높은 품질의 음악 재생 기능", "FairQueue™ 기술", "다양한 기능들"},
-                                RECOMMENDED_PERMS);
-        aboutCommand.setIsAuthor(false);
-        aboutCommand.setReplacementCharacter("\uD83C\uDFB6");
-        
         // set up the command client
         CommandClientBuilder cb = new CommandClientBuilder()
                 .setPrefix(config.getPrefix())
@@ -98,9 +120,11 @@ public class JMusicBot
                 .setHelpWord(config.getHelp())
                 .setLinkedCacheSize(200)
                 .setGuildSettingsManager(settings)
-                .addCommands(aboutCommand,
-                        new PingCommand(),
+                .addCommands(
                         new SettingsCmd(),
+                        new PingCmd(),
+                        new Glistcmd(waiter),
+//                        new Yee(),
                         
                         new LyricsCmd(bot),
                         new NowplayingCmd(bot),

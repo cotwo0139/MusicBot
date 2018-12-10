@@ -32,7 +32,7 @@ public class VolumeCmd extends DJCommand
     {
         super(bot);
         this.name = "volume";
-        this.aliases = new String[]{"vol","볼륨"};
+        this.aliases = new String[]{"vol","볼륨","qhffba","패ㅣㅕㅡㄷ","패ㅣ"};
         this.help = "볼륨을 설정하거나 볼륨을 볼수 있어요!";
         this.arguments = "[0-150]";
     }

@@ -32,7 +32,7 @@ public class SkipCmd extends MusicCommand
         super(bot);
         this.name = "skip";
         this.help = "현재 곡을 건너뛸지 투표합니다";
-        this.aliases = new String[]{"voteskip","건너뛰기"};
+        this.aliases = new String[]{"voteskip","건너뛰기","나ㅑㅔ","rjssjEnlrl"};
         this.beListening = true;
         this.bePlaying = true;
     }

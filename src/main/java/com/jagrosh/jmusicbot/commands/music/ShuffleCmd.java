@@ -30,10 +30,10 @@ public class ShuffleCmd extends MusicCommand
     {
         super(bot);
         this.name = "shuffle";
-        this.help = "shuffles songs you have added";
+        this.help = "당신이 추가한 음악을 셔플해요!";
         this.beListening = true;
         this.bePlaying = true;
-        this.aliases = new String[]{"셔플","혼합","섞기"};
+        this.aliases = new String[]{"셔플","혼합","섞기","노ㅕㄹ릳","tuvmf","ghsgkq","tjRrl"};
     }
 
     @Override

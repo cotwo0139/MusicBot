@@ -32,7 +32,7 @@ public class SkiptoCmd extends DJCommand
         this.name = "skipto";
         this.help = "선택한 곡으로 건너뛰어요!";
         this.arguments = "<위치>";
-        this.aliases = new String[]{"jumpto","점프"};
+        this.aliases = new String[]{"jumpto","점프","나ㅑㅔ새","wjavm","tjsxorrjssjEnlrl","선택건너뛰기"};
         this.bePlaying = true;
     }
 

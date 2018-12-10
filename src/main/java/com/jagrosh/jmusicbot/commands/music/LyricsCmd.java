@@ -38,7 +38,7 @@ public class LyricsCmd extends MusicCommand
         super(bot);
         this.name = "lyrics";
         this.help = "현재 재생중인 노래의 가사를 검색해요!";
-        this.aliases = new String[]{"nplyrics","가사"};
+        this.aliases = new String[]{"nplyrics","가사","ㅣㅛ걏ㄴ","rktk"};
         this.botPermissions = new Permission[]{Permission.MESSAGE_EMBED_LINKS};
         this.bePlaying = true;
     }
@@ -59,7 +59,7 @@ public class LyricsCmd extends MusicCommand
         
         if(lyrics == null)
         {
-            event.replyError(title + " 노래의 가사를 찾을수 없어요!");
+            event.replyError("**"+title+"**" + " 노래의 가사를 찾을수 없어요!");
             return;
         }
         if(lyrics.getContent().length() > 1500) {

@@ -33,6 +33,7 @@ public class RepeatCmd extends DJCommand
         this.help = "전채 반복을 활성화시거나 비활성화 해요!";
         this.arguments = "[on|off], [활성화|비활성화]";
         this.guildOnly = true;
+        this.aliases = new String[]{"qksqhr","ㄱ덷ㅁㅅ","반복"};
     }
     
     // override musiccommand's execute because we don't actually care where this is used

@@ -46,7 +46,7 @@ public class SearchCmd extends MusicCommand
         super(bot);
         this.searchingEmoji = searchingEmoji;
         this.name = "search";
-        this.aliases = new String[]{"ytsearch","유튜브검색"};
+        this.aliases = new String[]{"ytsearch","유튜브검색","ㄴㄷㅁㄱ초","ㅛㅅㄴㄷㅁㄱ초","dbxbqmrjator","rjator","dbxbqm"};
         this.arguments = "<검색어>";
         this.help = "검색어에 대한 유튜브 검색결과를 알려드려요!";
         this.beListening = true;

@@ -32,6 +32,7 @@ public class StopCmd extends DJCommand
         this.name = "stop";
         this.help = "현재 곡을 정지하고 대기열을 지워요!";
         this.bePlaying = false;
+        this.aliases = new String[]{"정지","ㄴ새ㅔ","wjdwl"};
     }
 
     @Override

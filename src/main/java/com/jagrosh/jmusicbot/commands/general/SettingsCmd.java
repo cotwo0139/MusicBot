@@ -33,8 +33,8 @@ public class SettingsCmd extends Command
     public SettingsCmd()
     {
         this.name = "settings";
-        this.help = "shows the bots settings";
-        this.aliases = new String[]{"status","설정"};
+        this.help = "봇의 설정을 보여줘요!";
+        this.aliases = new String[]{"status","설정","ㄴㄷㅅ샤ㅜㅎㄴ","tjfwjd","tjqjtjjfwjd"};
         this.guildOnly = true;
     }
     

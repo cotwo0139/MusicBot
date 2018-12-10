@@ -36,7 +36,7 @@ public class RemoveCmd extends MusicCommand
         this.name = "remove";
         this.help = "대기열에서 노래를 지워요!";
         this.arguments = "<위치|모두>";
-        this.aliases = new String[]{"delete","삭제"};
+        this.aliases = new String[]{"delete","삭제","ㄱ드ㅐㅍㄷ","제거","지우기","wldnrl","tkrwp","wprj","ㅇ딛ㅅㄷ"};
         this.beListening = true;
         this.bePlaying = true;
     }

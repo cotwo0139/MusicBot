@@ -32,6 +32,7 @@ public class PauseCmd extends DJCommand
         this.name = "pause";
         this.help = "현재 곡을 일시 정지시켜요!";
         this.bePlaying = true;
+        this.aliases = new String[]{"ㅔ면ㄷ","dlftlwjdwl"};
     }
 
     @Override

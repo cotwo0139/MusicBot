@@ -29,6 +29,6 @@ public class SCSearchCmd extends SearchCmd
         this.searchPrefix = "scsearch:";
         this.name = "scsearch";
         this.help = "검색어를 사운드클라우드에서 검색해요!";
-        this.aliases = new String[]{};
+        this.aliases = new String[]{"사클","soundcloud","sc","사운드클라우드","tkdnsemzmffkdnem"};
     }
 }

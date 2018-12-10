@@ -44,7 +44,7 @@ public class QueueCmd extends MusicCommand
         this.name = "queue";
         this.help = "shows the current queue";
         this.arguments = "[페이지 번호]";
-        this.aliases = new String[]{"list","재생목록","큐","목록"};
+        this.aliases = new String[]{"list","재생목록","큐","목록","벼뎓","zb","ahrfhr","ㅣㅑㄴㅅ"};
         this.bePlaying = true;
         this.botPermissions = new Permission[]{Permission.MESSAGE_ADD_REACTION,Permission.MESSAGE_EMBED_LINKS};
         builder = new Paginator.Builder()

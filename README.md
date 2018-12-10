@@ -15,7 +15,8 @@ A Discord music bot with a clean interface, and that is easy to set up and run y
 간결한 인터페이스와 셀프 호스팅이 쉬운 디스코드 뮤직 봇
 
 [![Setup](http://i.imgur.com/VvXYp5j.png)](https://github.com/jagrosh/MusicBot/wiki/Setup)
-**여기를 클릭하여 설치 가이드를 참조하십시오**
+
+### **[여기](https://github.com/jagrosh/MusicBot/wiki/Setup) 를 클릭하여 설치 가이드를 참조하십시오**
 
 ## Features
 ## 기능들

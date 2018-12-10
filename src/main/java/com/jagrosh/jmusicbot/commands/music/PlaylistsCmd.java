@@ -31,7 +31,7 @@ public class PlaylistsCmd extends MusicCommand
         super(bot);
         this.name = "playlists";
         this.help = "사용 가능한 재생 목록를 보여드려요!";
-        this.aliases = new String[]{"pls","재생목록","ㅔㅣ묘ㅣㅑㄴㅅㄴㄴ"};
+        this.aliases = new String[]{"pls","재생목록들","ㅔㅣ묘ㅣㅑㄴㅅㄴㄴ"};
         this.guildOnly = true;
         this.beListening = false;
         this.beListening = false;

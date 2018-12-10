@@ -191,14 +191,14 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
             Guild guild = guild(jda);
             AudioTrack track = audioPlayer.getPlayingTrack();
             MessageBuilder mb = new MessageBuilder();
-            mb.append(FormatUtil.filter(manager.getBot().getConfig().getSuccess()+" **Now Playing in "+guild.getSelfMember().getVoiceState().getChannel().getName()+"...**"));
+            mb.append(FormatUtil.filter("**"+manager.getBot().getConfig().getSuccess()+guild.getSelfMember().getVoiceState().getChannel().getName()+"** 에서 재생 중이에요..."));
             EmbedBuilder eb = new EmbedBuilder();
             eb.setColor(guild.getSelfMember().getColor());
             if(getRequester() != 0)
             {
                 User u = guild.getJDA().getUserById(getRequester());
                 if(u==null)
-                    eb.setAuthor("Unknown (ID:"+getRequester()+")", null, null);
+                    eb.setAuthor("알수 없음 (ID:"+getRequester()+")", null, null);
                 else
                     eb.setAuthor(u.getName()+"#"+u.getDiscriminator(), null, u.getEffectiveAvatarUrl());
             }
@@ -218,7 +218,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
             }
             
             if(track.getInfo().author != null && !track.getInfo().author.isEmpty())
-                eb.setFooter("Source: " + track.getInfo().author, null);
+                eb.setFooter("곡 출처: " + track.getInfo().author, null);
 
             double progress = (double)audioPlayer.getPlayingTrack().getPosition()/track.getDuration();
             eb.setDescription((audioPlayer.isPaused() ? JMusicBot.PAUSE_EMOJI : JMusicBot.PLAY_EMOJI)
@@ -235,9 +235,9 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
     {
         Guild guild = guild(jda);
         return new MessageBuilder()
-                .setContent(FormatUtil.filter(manager.getBot().getConfig().getSuccess()+" **Now Playing...**"))
+                .setContent(FormatUtil.filter(manager.getBot().getConfig().getSuccess()+" **재생 중...**"))
                 .setEmbed(new EmbedBuilder()
-                .setTitle("No music playing")
+                .setTitle("아무것도 재생중이지 않아요!")
                 .setDescription(JMusicBot.STOP_EMOJI+" "+FormatUtil.progressBar(-1)+" "+FormatUtil.volumeIcon(audioPlayer.getVolume()))
                 .setColor(guild.getSelfMember().getColor())
                 .build()).build();
@@ -250,14 +250,14 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
             long userid = getRequester();
             AudioTrack track = audioPlayer.getPlayingTrack();
             String title = track.getInfo().title;
-            if(title==null || title.equals("Unknown Title"))
+            if(title==null || title.equals("제목 없음"))
                 title = track.getInfo().uri;
-            return "**"+title+"** ["+(userid==0 ? "autoplay" : "<@"+userid+">")+"]"
+            return "**"+title+"** ["+(userid==0 ? "자동 재생" : "<@"+userid+">")+"]"
                     + "\n"+(audioPlayer.isPaused()?"\u23F8":"\u25B6")+" "
                     +"["+FormatUtil.formatTime(track.getDuration())+"] "
                     +FormatUtil.volumeIcon(audioPlayer.getVolume());
         }
-        else return "No music playing \u23F9 " + FormatUtil.volumeIcon(audioPlayer.getVolume());
+        else return "아무것도 재생중이지 않아요.. \u23F9 " + FormatUtil.volumeIcon(audioPlayer.getVolume());
     }
     
     // Audio Send Handler methods

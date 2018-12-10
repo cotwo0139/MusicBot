@@ -32,8 +32,8 @@ public class SetvcCmd extends AdminCommand
     public SetvcCmd()
     {
         this.name = "setvc";
-        this.help = "sets the voice channel for playing music";
-        this.arguments = "<channel|NONE>";
+        this.help = "음악을 재생할 보이스 채널을 선택해요!";
+        this.arguments = "<보이스 채널|없음>";
     }
     
     @Override
@@ -41,26 +41,26 @@ public class SetvcCmd extends AdminCommand
     {
         if(event.getArgs().isEmpty())
         {
-            event.reply(event.getClient().getError()+" Please include a voice channel or NONE");
+            event.reply(event.getClient().getError()+" 보이스 채널의 이름이나, ``없음`` 을 입력해 주세요!");
             return;
         }
         Settings s = event.getClient().getSettingsFor(event.getGuild());
-        if(event.getArgs().equalsIgnoreCase("none"))
+        if(event.getArgs().equalsIgnoreCase("없음"))
         {
             s.setVoiceChannel(null);
-            event.reply(event.getClient().getSuccess()+" Music can now be played in any channel");
+            event.reply(event.getClient().getSuccess()+" 이제부터 음악은 아무 채널에서나 재생 가능해요!");
         }
         else
         {
             List<VoiceChannel> list = FinderUtil.findVoiceChannels(event.getArgs(), event.getGuild());
             if(list.isEmpty())
-                event.reply(event.getClient().getWarning()+" No Voice Channels found matching \""+event.getArgs()+"\"");
+                event.reply(event.getClient().getWarning()+" \""+event.getArgs()+"\" 에 맞는 보이스 채널을 찾을 수 없어요!");
             else if (list.size()>1)
                 event.reply(event.getClient().getWarning()+FormatUtil.listOfVChannels(list, event.getArgs()));
             else
             {
                 s.setVoiceChannel(list.get(0));
-                event.reply(event.getClient().getSuccess()+" Music can now only be played in **"+list.get(0).getName()+"**");
+                event.reply(event.getClient().getSuccess()+" 이제부터 음악은 **"+list.get(0).getName()+"** 채널에서만 들으실 수 있어요!");
             }
         }
     }

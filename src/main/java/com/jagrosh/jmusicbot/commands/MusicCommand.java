@@ -39,7 +39,7 @@ public abstract class MusicCommand extends Command
     {
         this.bot = bot;
         this.guildOnly = true;
-        this.category = new Category("Music");
+        this.category = new Category("음악");
     }
     
     @Override
@@ -53,13 +53,13 @@ public abstract class MusicCommand extends Command
             {
                 event.getMessage().delete().queue();
             } catch(PermissionException ignore){}
-            event.replyInDm(event.getClient().getError()+" You can only use that command in "+tchannel.getAsMention()+"!");
+            event.replyInDm(event.getClient().getError()+" 당신은 뮤직 커맨드를 오로지"+tchannel.getAsMention()+" 텍스트 채널에서만 사용 가능해요!");
             return;
         }
         bot.getPlayerManager().setUpHandler(event.getGuild()); // no point constantly checking for this later
         if(bePlaying && !((AudioHandler)event.getGuild().getAudioManager().getSendingHandler()).isMusicPlaying(event.getJDA()))
         {
-            event.reply(event.getClient().getError()+" There must be music playing to use that!");
+            event.reply(event.getClient().getError()+" 저것을 사용하기 위해서는 음악을 재생해야 해요!");
             return;
         }
         if(beListening)
@@ -70,7 +70,7 @@ public abstract class MusicCommand extends Command
             GuildVoiceState userState = event.getMember().getVoiceState();
             if(!userState.inVoiceChannel() || userState.isDeafened() || (current!=null && !userState.getChannel().equals(current)))
             {
-                event.replyError("You must be listening in "+(current==null ? "a voice channel" : "**"+current.getName()+"**")+" to use that!");
+                event.replyError("당신은 "+(current==null ? "음성 채널" : "**"+current.getName()+"**")+" 에 접속해야 사용이 가능해요!");
                 return;
             }
             if(!event.getGuild().getSelfMember().getVoiceState().inVoiceChannel())
@@ -81,7 +81,7 @@ public abstract class MusicCommand extends Command
                 }
                 catch(PermissionException ex) 
                 {
-                    event.reply(event.getClient().getError()+" I am unable to connect to **"+userState.getChannel().getName()+"**!");
+                    event.reply(event.getClient().getError()+" 제가 **"+userState.getChannel().getName()+"** 에 접속할수 없어요!");
                     return;
                 }
             }

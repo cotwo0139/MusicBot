@@ -31,8 +31,8 @@ public class SkipCmd extends MusicCommand
     {
         super(bot);
         this.name = "skip";
-        this.help = "votes to skip the current song";
-        this.aliases = new String[]{"voteskip"};
+        this.help = "현재 곡을 건너뛸지 투표합니다";
+        this.aliases = new String[]{"voteskip","건너뛰기"};
         this.beListening = true;
         this.bePlaying = true;
     }
@@ -43,7 +43,7 @@ public class SkipCmd extends MusicCommand
         AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
         if(event.getAuthor().getIdLong()==handler.getRequester())
         {
-            event.reply(event.getClient().getSuccess()+" Skipped **"+handler.getPlayer().getPlayingTrack().getInfo().title+"**");
+            event.reply(event.getClient().getSuccess()+" **"+handler.getPlayer().getPlayingTrack().getInfo().title+"** 을(를) 건너뛰었어요!");
             handler.getPlayer().stopTrack();
         }
         else
@@ -52,21 +52,21 @@ public class SkipCmd extends MusicCommand
                     .filter(m -> !m.getUser().isBot() && !m.getVoiceState().isDeafened()).count();
             String msg;
             if(handler.getVotes().contains(event.getAuthor().getId()))
-                msg = event.getClient().getWarning()+" You already voted to skip this song `[";
+                msg = event.getClient().getWarning()+" 당신은 이미 노래 건너뛰기에 투표하였어요! `[";
             else
             {
-                msg = event.getClient().getSuccess()+" You voted to skip the song `[";
+                msg = event.getClient().getSuccess()+" 당신은 노래 건너뛰기에 투표하였어요! `[";
                 handler.getVotes().add(event.getAuthor().getId());
             }
             int skippers = (int)event.getSelfMember().getVoiceState().getChannel().getMembers().stream()
                     .filter(m -> handler.getVotes().contains(m.getUser().getId())).count();
             int required = (int)Math.ceil(listeners * .55);
-            msg+= skippers+" votes, "+required+"/"+listeners+" needed]`";
+            msg+= skippers+" 표들, "+required+"/"+listeners+" 필요]`";
             if(skippers>=required)
             {
                 User u = event.getJDA().getUserById(handler.getRequester());
-                msg+="\n"+event.getClient().getSuccess()+" Skipped **"+handler.getPlayer().getPlayingTrack().getInfo().title
-                    +"**"+(handler.getRequester()==0 ? "" : " (requested by "+(u==null ? "someone" : "**"+u.getName()+"**")+")");
+                msg+="\n"+event.getClient().getSuccess()+" **"+handler.getPlayer().getPlayingTrack().getInfo().title
+                    +"** 을(를) 건너뛰었어요! "+(handler.getRequester()==0 ? "" : " (신청자: "+(u==null ? "누군가" : "**"+u.getName()+"**")+")");
                 handler.getPlayer().stopTrack();
             }
             event.reply(msg);

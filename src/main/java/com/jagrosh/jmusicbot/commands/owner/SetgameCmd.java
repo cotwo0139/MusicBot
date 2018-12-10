@@ -28,8 +28,8 @@ public class SetgameCmd extends OwnerCommand
     public SetgameCmd()
     {
         this.name = "setgame";
-        this.help = "sets the game the bot is playing";
-        this.arguments = "[action] [game]";
+        this.help = "봇이 플레이하는 게임을 설정해요!";
+        this.arguments = "[활동] [게임]";
         this.guildOnly = false;
         this.children = new OwnerCommand[]{
             new SetlistenCmd(),
@@ -46,11 +46,11 @@ public class SetgameCmd extends OwnerCommand
         {
             event.getJDA().getPresence().setGame(title.isEmpty() ? null : Game.playing(title));
             event.reply(event.getClient().getSuccess()+" **"+event.getSelfUser().getName()
-                    +"** is "+(title.isEmpty() ? "no longer playing anything." : "now playing `"+title+"`"));
+                    +"** 는 이제 "+(title.isEmpty() ? "아무것도 플레이하지 않아요!" : "`"+title+"` 를 플레이해요!"));
         }
         catch(Exception e)
         {
-            event.reply(event.getClient().getError()+" The game could not be set!");
+            event.reply(event.getClient().getError()+" 플레이하는 게임이 설정되지 않았어요!");
         }
     }
     
@@ -60,8 +60,8 @@ public class SetgameCmd extends OwnerCommand
         {
             this.name = "stream";
             this.aliases = new String[]{"twitch","streaming"};
-            this.help = "sets the game the bot is playing to a stream";
-            this.arguments = "<username> <game>";
+            this.help = "봇을 스트리밍 상태로 설정해요!";
+            this.arguments = "<트위치 유저 이름> <게임>";
             this.guildOnly = false;
         }
 
@@ -71,18 +71,18 @@ public class SetgameCmd extends OwnerCommand
             String[] parts = event.getArgs().split("\\s+", 2);
             if(parts.length<2)
             {
-                event.replyError("Please include a twitch username and the name of the game to 'stream'");
+                event.replyError("트위치 유저 이름과 게임 이름을 포함해주세요!");
                 return;
             }
             try
             {
                 event.getJDA().getPresence().setGame(Game.streaming(parts[1], "https://twitch.tv/"+parts[0]));
                 event.replySuccess("**"+event.getSelfUser().getName()
-                        +"** is now streaming `"+parts[1]+"`");
+                        +"** 는 이제 `"+parts[1]+"` 을(를) 방송 중 이에요!");
             }
             catch(Exception e)
             {
-                event.reply(event.getClient().getError()+" The game could not be set!");
+                event.reply(event.getClient().getError()+" 플레이하는 게임이 설정되지 않았어요!");
             }
         }
     }
@@ -93,8 +93,8 @@ public class SetgameCmd extends OwnerCommand
         {
             this.name = "listen";
             this.aliases = new String[]{"listening"};
-            this.help = "sets the game the bot is listening to";
-            this.arguments = "<title>";
+            this.help = "봇의 게임 상태를 듣기로 설정해요!";
+            this.arguments = "<제목>";
             this.guildOnly = false;
         }
 
@@ -103,16 +103,16 @@ public class SetgameCmd extends OwnerCommand
         {
             if(event.getArgs().isEmpty())
             {
-                event.replyError("Please include a title to listen to!");
+                event.replyError("듣는 노래의 제목을 포함해주세요!");
                 return;
             }
             String title = event.getArgs().toLowerCase().startsWith("to") ? event.getArgs().substring(2).trim() : event.getArgs();
             try
             {
                 event.getJDA().getPresence().setGame(Game.listening(title));
-                event.replySuccess("**"+event.getSelfUser().getName()+"** is now listening to `"+title+"`");
+                event.replySuccess("**"+event.getSelfUser().getName()+"** 는 이제 `"+title+"` 을(를) 듣고 있어요!");
             } catch(Exception e) {
-                event.reply(event.getClient().getError()+" The game could not be set!");
+                event.reply(event.getClient().getError()+" 플레이하는 게임이 설정되지 않았어요!");
             }
         }
     }
@@ -123,8 +123,8 @@ public class SetgameCmd extends OwnerCommand
         {
             this.name = "watch";
             this.aliases = new String[]{"watching"};
-            this.help = "sets the game the bot is watching";
-            this.arguments = "<title>";
+            this.help = "봇의 무언가를 보고있는 상태로 설정해요!";
+            this.arguments = "<제목>";
             this.guildOnly = false;
         }
 
@@ -133,16 +133,16 @@ public class SetgameCmd extends OwnerCommand
         {
             if(event.getArgs().isEmpty())
             {
-                event.replyError("Please include a title to watch!");
+                event.replyError("보고있는 것의 제목을 포함해주세요!");
                 return;
             }
             String title = event.getArgs();
             try
             {
                 event.getJDA().getPresence().setGame(Game.watching(title));
-                event.replySuccess("**"+event.getSelfUser().getName()+"** is now watching `"+title+"`");
+                event.replySuccess("**"+event.getSelfUser().getName()+"** 는 지금 `"+title+"` 을(를) 보고있는 상태로 설정되었어요!");
             } catch(Exception e) {
-                event.reply(event.getClient().getError()+" The game could not be set!");
+                event.reply(event.getClient().getError()+" 플레이하는 게임이 설정되지 않았어요!");
             }
         }
     }

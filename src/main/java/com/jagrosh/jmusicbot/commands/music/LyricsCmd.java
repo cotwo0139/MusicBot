@@ -37,7 +37,8 @@ public class LyricsCmd extends MusicCommand
     {
         super(bot);
         this.name = "lyrics";
-        this.help = "shows the lyrics to the currently-playing song";
+        this.help = "현재 재생중인 노래의 가사를 검색해요!";
+        this.aliases = new String[]{"nplyrics","가사"};
         this.botPermissions = new Permission[]{Permission.MESSAGE_EMBED_LINKS};
         this.bePlaying = true;
     }
@@ -58,13 +59,21 @@ public class LyricsCmd extends MusicCommand
         
         if(lyrics == null)
         {
-            event.replyError("Lyrics for `" + title + "` could not be found!");
+            event.replyError(title + " 노래의 가사를 찾을수 없어요!");
             return;
         }
-        
-        event.reply(new EmbedBuilder().setColor(event.getSelfMember().getColor())
-                .setAuthor(lyrics.getAuthor())
-                .setTitle(lyrics.getTitle(), lyrics.getURL())
-                .setDescription(lyrics.getContent()).build());
+        if(lyrics.getContent().length() > 1500) {
+        	event.reply(new EmbedBuilder().setColor(event.getSelfMember().getColor())
+                    .setAuthor(lyrics.getAuthor())
+                    .setTitle(lyrics.getTitle(), lyrics.getURL())
+                    .setDescription(lyrics.getContent().substring(0,1500)+"...")
+                    .setFooter("가사의 정보는 정확하지 않을 수 있어요!", event.getSelfUser().getAvatarUrl()).build());
+        } else if(lyrics.getContent().length() < 1500) {
+        	event.reply(new EmbedBuilder().setColor(event.getSelfMember().getColor())
+                    .setAuthor(lyrics.getAuthor())
+                    .setTitle(lyrics.getTitle(), lyrics.getURL())
+                    .setDescription(lyrics.getContent().substring(0,lyrics.getContent().length()))
+                    .setFooter("가사의 정보는 정확하지 않을 수 있어요!", event.getSelfUser().getAvatarUrl()).build());
+        }
     }
 }

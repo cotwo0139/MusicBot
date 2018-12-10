@@ -35,10 +35,10 @@ import org.json.JSONTokener;
  */
 public class OtherUtil
 {
-    public final static String NEW_VERSION_AVAILABLE = "There is a new version of JMusicBot available!\n"
-                    + "Current version: %s\n"
-                    + "New Version: %s\n\n"
-                    + "Please visit https://github.com/jagrosh/MusicBot/releases/latest to get the latest release.";
+    public final static String NEW_VERSION_AVAILABLE = "새로운 버전의 JMUSICBOT 이 있어요!\n"
+                    + "현재 버전: %s\n"
+                    + "새로운 버전: %s\n\n"
+                    + "https://github.com/jagrosh/MusicBot/releases/latest 에서 최신 릴리스를 찾으실수 있어요!";
     
     public static InputStream imageFromUrl(String url)
     {

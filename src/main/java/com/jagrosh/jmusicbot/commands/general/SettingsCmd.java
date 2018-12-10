@@ -34,7 +34,7 @@ public class SettingsCmd extends Command
     {
         this.name = "settings";
         this.help = "shows the bots settings";
-        this.aliases = new String[]{"status"};
+        this.aliases = new String[]{"status","설정"};
         this.guildOnly = true;
     }
     
@@ -45,21 +45,21 @@ public class SettingsCmd extends Command
         MessageBuilder builder = new MessageBuilder()
                 .append("\uD83C\uDFA7 **")
                 .append(event.getSelfUser().getName())
-                .append("** settings:");
+                .append("** 설정들:");
         TextChannel tchan = s.getTextChannel(event.getGuild());
         VoiceChannel vchan = s.getVoiceChannel(event.getGuild());
         Role role = s.getRole(event.getGuild());
         EmbedBuilder ebuilder = new EmbedBuilder()
                 .setColor(event.getSelfMember().getColor())
-                .setDescription("Text Channel: "+(tchan==null ? "Any" : "**#"+tchan.getName()+"**")
-                        + "\nVoice Channel: "+(vchan==null ? "Any" : "**"+vchan.getName()+"**")
-                        + "\nDJ Role: "+(role==null ? "None" : "**"+role.getName()+"**")
-                        + "\nRepeat Mode: **"+(s.getRepeatMode() ? "On" : "Off")+"**"
-                        + "\nDefault Playlist: "+(s.getDefaultPlaylist()==null ? "None" : "**"+s.getDefaultPlaylist()+"**")
+                .setDescription("기본 텍스트 채널: "+(tchan==null ? "모든 곳!" : "**#"+tchan.getName()+"**")
+                        + "\n보이스 채널: "+(vchan==null ? "모든 곳!" : "**"+vchan.getName()+"**")
+                        + "\nDJ 역할: "+(role==null ? "없음" : "**"+role.getName()+"**")
+                        + "\n반복 모드: **"+(s.getRepeatMode() ? "활성화" : "비활성화")+"**"
+                        + "\n기본 플레이리스트: "+(s.getDefaultPlaylist()==null ? "존재하지 않아요!" : "**"+s.getDefaultPlaylist()+"**")
                         )
-                .setFooter(event.getJDA().getGuilds().size()+" servers | "
+                .setFooter(event.getJDA().getGuilds().size()+" 서버들 | "
                         +event.getJDA().getGuilds().stream().filter(g -> g.getSelfMember().getVoiceState().inVoiceChannel()).count()
-                        +" audio connections", null);
+                        +" 오디오 연결들", null);
         event.getChannel().sendMessage(builder.setEmbed(ebuilder.build()).build()).queue();
     }
     

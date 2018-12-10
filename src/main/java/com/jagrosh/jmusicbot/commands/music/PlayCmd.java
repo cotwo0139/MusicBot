@@ -52,8 +52,8 @@ public class PlayCmd extends MusicCommand
         super(bot);
         this.loadingEmoji = loadingEmoji;
         this.name = "play";
-        this.arguments = "<title|URL|subcommand>";
-        this.help = "plays the provided song";
+        this.arguments = "<제목|주소|다른 명령어>";
+        this.help = "노래를 재생해요!";
         this.beListening = true;
         this.bePlaying = false;
         this.children = new Command[]{new PlaylistCmd(bot)};
@@ -75,17 +75,17 @@ public class PlayCmd extends MusicCommand
                 if(!isDJ && dj!=null)
                     isDJ = event.getMember().getRoles().contains(dj);
                 if(!isDJ)
-                    event.replyError("Only DJs can unpause the player!");
+                    event.replyError("오로지 DJ 만 일시 정지를 해제할 수 있어요!");
                 else
                 {
                     handler.getPlayer().setPaused(false);
-                    event.replySuccess("Resumed **"+handler.getPlayer().getPlayingTrack().getInfo().title+"**.");
+                    event.replySuccess(" **"+handler.getPlayer().getPlayingTrack().getInfo().title+"** 를 다시 재생해요!");
                 }
                 return;
             }
-            StringBuilder builder = new StringBuilder(event.getClient().getWarning()+" Play Commands:\n");
-            builder.append("\n`").append(event.getClient().getPrefix()).append(name).append(" <song title>` - plays the first result from Youtube");
-            builder.append("\n`").append(event.getClient().getPrefix()).append(name).append(" <URL>` - plays the provided song, playlist, or stream");
+            StringBuilder builder = new StringBuilder(event.getClient().getWarning()+" 재생 명령어들:\n");
+            builder.append("\n`").append(event.getClient().getPrefix()).append(name).append(" <노래 제목>` - 유튜브 검색 결과 첫번째 노래를 재생해요!");
+            builder.append("\n`").append(event.getClient().getPrefix()).append(name).append(" <주소>` - 주소의 노래나 스트리밍, 플레이리스트를 재생해요!");
             for(Command cmd: children)
                 builder.append("\n`").append(event.getClient().getPrefix()).append(name).append(" ").append(cmd.getName()).append(" ").append(cmd.getArguments()).append("` - ").append(cmd.getHelp());
             event.reply(builder.toString());
@@ -94,7 +94,7 @@ public class PlayCmd extends MusicCommand
         String args = event.getArgs().startsWith("<") && event.getArgs().endsWith(">") 
                 ? event.getArgs().substring(1,event.getArgs().length()-1) 
                 : event.getArgs().isEmpty() ? event.getMessage().getAttachments().get(0).getUrl() : event.getArgs();
-        event.reply(loadingEmoji+" Loading... `["+args+"]`", m -> bot.getPlayerManager().loadItemOrdered(event.getGuild(), args, new ResultHandler(m,event,false)));
+        event.reply(loadingEmoji+" 로딩 중... `["+args+"]`", m -> bot.getPlayerManager().loadItemOrdered(event.getGuild(), args, new ResultHandler(m,event,false)));
     }
     
     private class ResultHandler implements AudioLoadResultHandler
@@ -114,27 +114,27 @@ public class PlayCmd extends MusicCommand
         {
             if(bot.getConfig().isTooLong(track))
             {
-                m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" This track (**"+track.getInfo().title+"**) is longer than the allowed maximum: `"
+                m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" 이 곡 (**"+track.getInfo().title+"**) 은(는) 허용된 곡 길이보다 길어요! : `"
                         +FormatUtil.formatTime(track.getDuration())+"` > `"+FormatUtil.formatTime(bot.getConfig().getMaxSeconds()*1000)+"`")).queue();
                 return;
             }
             AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
             int pos = handler.addTrack(new QueuedTrack(track, event.getAuthor()))+1;
-            String addMsg = FormatUtil.filter(event.getClient().getSuccess()+" Added **"+track.getInfo().title
-                    +"** (`"+FormatUtil.formatTime(track.getDuration())+"`) "+(pos==0?"to begin playing":" to the queue at position "+pos));
+            String addMsg = FormatUtil.filter(event.getClient().getSuccess()+" **"+track.getInfo().title
+                    +"** (`"+FormatUtil.formatTime(track.getDuration())+"`) 곡이 "+(pos==0?"곧 재생돼요!":" 대기열 "+pos+" 번에 추가되었어요!"));
             if(playlist==null || !event.getSelfMember().hasPermission(event.getTextChannel(), Permission.MESSAGE_ADD_REACTION))
                 m.editMessage(addMsg).queue();
             else
             {
                 new ButtonMenu.Builder()
-                        .setText(addMsg+"\n"+event.getClient().getWarning()+" This track has a playlist of **"+playlist.getTracks().size()+"** tracks attached. Select "+LOAD+" to load playlist.")
+                        .setText(addMsg+"\n"+event.getClient().getWarning()+" 이 곡의 재생 목록에는 **"+playlist.getTracks().size()+"** 곡이 포함되어 있어요! "+LOAD+" 를 선택하여 로드하실수 있어요!")
                         .setChoices(LOAD, CANCEL)
                         .setEventWaiter(bot.getWaiter())
                         .setTimeout(30, TimeUnit.SECONDS)
                         .setAction(re ->
                         {
                             if(re.getName().equals(LOAD))
-                                m.editMessage(addMsg+"\n"+event.getClient().getSuccess()+" Loaded **"+loadPlaylist(playlist, track)+"** additional tracks!").queue();
+                                m.editMessage(addMsg+"\n"+event.getClient().getSuccess()+" 추가적인 곡 **"+loadPlaylist(playlist, track)+"** 개를 로드했어요!").queue();
                             else
                                 m.editMessage(addMsg).queue();
                         }).setFinalAction(m ->
@@ -182,16 +182,16 @@ public class PlayCmd extends MusicCommand
                 int count = loadPlaylist(playlist, null);
                 if(count==0)
                 {
-                    m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" All entries in this playlist "+(playlist.getName()==null ? "" : "(**"+playlist.getName()
-                            +"**) ")+"were longer than the allowed maximum (`"+bot.getConfig().getMaxTime()+"`)")).queue();
+                    m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" 이 재생 목록의 모든 항목 "+(playlist.getName()==null ? "" : "(**"+playlist.getName()
+                            +"**) ")+"은 허용된 길이보다 길어요! (`"+bot.getConfig().getMaxTime()+"`)")).queue();
                 }
                 else
                 {
-                    m.editMessage(FormatUtil.filter(event.getClient().getSuccess()+" Found "
-                            +(playlist.getName()==null?"a playlist":"playlist **"+playlist.getName()+"**")+" with `"
-                            + playlist.getTracks().size()+"` entries; added to the queue!"
-                            + (count<playlist.getTracks().size() ? "\n"+event.getClient().getWarning()+" Tracks longer than the allowed maximum (`"
-                            + bot.getConfig().getMaxTime()+"`) have been omitted." : ""))).queue();
+                    m.editMessage(FormatUtil.filter(event.getClient().getSuccess()
+                    		+(playlist.getName()==null?"재생 목록":"재생 목록 **"+playlist.getName()+"**")+" 와 `"
+                            + playlist.getTracks().size()+"` 개가 대기열에 추가되었어요!"
+                            + (count<playlist.getTracks().size() ? "\n"+event.getClient().getWarning()+" 개의 곡이 (`"
+                            + bot.getConfig().getMaxTime()+"`) 허용된 길이보다 길어 생략되었어요!" : ""))).queue();
                 }
             }
         }
@@ -200,7 +200,7 @@ public class PlayCmd extends MusicCommand
         public void noMatches()
         {
             if(ytsearch)
-                m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" No results found for `"+event.getArgs()+"`.")).queue();
+                m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" `"+event.getArgs()+"` 에 대한 검색 결과를 찾지 못했어요!")).queue();
             else
                 bot.getPlayerManager().loadItemOrdered(event.getGuild(), "ytsearch:"+event.getArgs(), new ResultHandler(m,event,true));
         }
@@ -209,9 +209,9 @@ public class PlayCmd extends MusicCommand
         public void loadFailed(FriendlyException throwable)
         {
             if(throwable.severity==Severity.COMMON)
-                m.editMessage(event.getClient().getError()+" Error loading: "+throwable.getMessage()).queue();
+                m.editMessage(event.getClient().getError()+" 로딩에 에러가 발생했어요! "+throwable.getMessage()).queue();
             else
-                m.editMessage(event.getClient().getError()+" Error loading track.").queue();
+                m.editMessage(event.getClient().getError()+" 곡을 로딩하는데 에러가 발생했어요!").queue();
         }
     }
     
@@ -222,8 +222,8 @@ public class PlayCmd extends MusicCommand
             super(bot);
             this.name = "playlist";
             this.aliases = new String[]{"pl"};
-            this.arguments = "<name>";
-            this.help = "plays the provided playlist";
+            this.arguments = "<이름>";
+            this.help = "제공된 재생 목록을 재생해요!";
             this.beListening = true;
             this.bePlaying = false;
         }
@@ -233,24 +233,24 @@ public class PlayCmd extends MusicCommand
         {
             if(event.getArgs().isEmpty())
             {
-                event.reply(event.getClient().getError()+" Please include a playlist name.");
+                event.reply(event.getClient().getError()+" 재생 목록의 이름을 포함해주세요!");
                 return;
             }
             Playlist playlist = bot.getPlaylistLoader().getPlaylist(event.getArgs());
             if(playlist==null)
             {
-                event.replyError("I could not find `"+event.getArgs()+".txt` in the Playlists folder.");
+                event.replyError("저는 `"+event.getArgs()+".txt` 를 재생 목록 폴더에서 찾지 못했어요!");
                 return;
             }
-            event.getChannel().sendMessage(loadingEmoji+" Loading playlist **"+event.getArgs()+"**... ("+playlist.getItems().size()+" items)").queue(m -> 
+            event.getChannel().sendMessage(loadingEmoji+" 재생 목록 **"+event.getArgs()+"** 을 로드 중이에요... ("+playlist.getItems().size()+" 개)").queue(m -> 
             {
                 AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
                 playlist.loadTracks(bot.getPlayerManager(), (at)->handler.addTrack(new QueuedTrack(at, event.getAuthor())), () -> {
                     StringBuilder builder = new StringBuilder(playlist.getTracks().isEmpty() 
-                            ? event.getClient().getWarning()+" No tracks were loaded!" 
-                            : event.getClient().getSuccess()+" Loaded **"+playlist.getTracks().size()+"** tracks!");
+                            ? event.getClient().getWarning()+" 곡이 로드되지 않았어요!" 
+                            : event.getClient().getSuccess()+" **"+playlist.getTracks().size()+"** 개의 곡이 로드되었어요!");
                     if(!playlist.getErrors().isEmpty())
-                        builder.append("\nThe following tracks failed to load:");
+                        builder.append("\n이 곡들은 로드되지 않았어요:");
                     playlist.getErrors().forEach(err -> builder.append("\n`[").append(err.getIndex()+1).append("]` **").append(err.getItem()).append("**: ").append(err.getReason()));
                     String str = builder.toString();
                     if(str.length()>2000)

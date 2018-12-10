@@ -31,8 +31,8 @@ public class SetavatarCmd extends OwnerCommand
     public SetavatarCmd()
     {
         this.name = "setavatar";
-        this.help = "sets the avatar of the bot";
-        this.arguments = "<url>";
+        this.help = "봇의 아바타를 설정해요!";
+        this.arguments = "<주소>";
         this.guildOnly = false;
     }
     
@@ -50,16 +50,16 @@ public class SetavatarCmd extends OwnerCommand
         InputStream s = OtherUtil.imageFromUrl(url);
         if(s==null)
         {
-            event.reply(event.getClient().getError()+" Invalid or missing URL");
+            event.reply(event.getClient().getError()+" 존재하지 않거나 잘못된 주소에요!");
         }
         else
         {
             try {
             event.getSelfUser().getManager().setAvatar(Icon.from(s)).queue(
-                    v -> event.reply(event.getClient().getSuccess()+" Successfully changed avatar."), 
-                    t -> event.reply(event.getClient().getError()+" Failed to set avatar."));
+                    v -> event.reply(event.getClient().getSuccess()+" 성공적으로 아바타를 바꾸었어요!"), 
+                    t -> event.reply(event.getClient().getError()+" 아바타 설정에 실패했어요!"));
             } catch(IOException e) {
-                event.reply(event.getClient().getError()+" Could not load from provided URL.");
+                event.reply(event.getClient().getError()+" 제공된 주소를 로드할수 없어요");
             }
         }
     }

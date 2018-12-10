@@ -32,8 +32,8 @@ public class SettcCmd extends AdminCommand
     public SettcCmd()
     {
         this.name = "settc";
-        this.help = "sets the text channel for music commands";
-        this.arguments = "<channel|NONE>";
+        this.help = "음악 명령어를 사용할 채널을 선택해요!";
+        this.arguments = "<채널|없음>";
     }
     
     @Override
@@ -41,26 +41,26 @@ public class SettcCmd extends AdminCommand
     {
         if(event.getArgs().isEmpty())
         {
-            event.reply(event.getClient().getError()+" Please include a text channel or NONE");
+            event.reply(event.getClient().getError()+" 텍스트 채널이나 텍스트 채널 이름, 또는 ``없음`` 을 입력해주세요!");
             return;
         }
         Settings s = event.getClient().getSettingsFor(event.getGuild());
-        if(event.getArgs().equalsIgnoreCase("none"))
+        if(event.getArgs().equalsIgnoreCase("없음"))
         {
             s.setTextChannel(null);
-            event.reply(event.getClient().getSuccess()+" Music commands can now be used in any channel");
+            event.reply(event.getClient().getSuccess()+" 음악 명령어는 이제 모든 채널에서 사용이 가능해요!");
         }
         else
         {
             List<TextChannel> list = FinderUtil.findTextChannels(event.getArgs(), event.getGuild());
             if(list.isEmpty())
-                event.reply(event.getClient().getWarning()+" No Text Channels found matching \""+event.getArgs()+"\"");
+                event.reply(event.getClient().getWarning()+" \""+event.getArgs()+"\" 에 맞는 텍스트 채널을 찾지 못했어요!");
             else if (list.size()>1)
                 event.reply(event.getClient().getWarning()+FormatUtil.listOfTChannels(list, event.getArgs()));
             else
             {
                 s.setTextChannel(list.get(0));
-                event.reply(event.getClient().getSuccess()+" Music commands can now only be used in <#"+list.get(0).getId()+">");
+                event.reply(event.getClient().getSuccess()+" 음악 커맨드는 이제 <#"+list.get(0).getId()+"> 에서만 사용 가능해요!");
             }
         }
     }

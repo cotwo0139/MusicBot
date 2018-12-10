@@ -29,7 +29,7 @@ public class FormatUtil {
     public static String formatTime(long duration)
     {
         if(duration == Long.MAX_VALUE)
-            return "LIVE";
+            return "실시간 스트리밍";
         long seconds = Math.round(duration/1000.0);
         long hours = seconds/(60*60);
         seconds %= 60*60;
@@ -79,31 +79,31 @@ public class FormatUtil {
     
     public static String listOfTChannels(List<TextChannel> list, String query)
     {
-        String out = " Multiple text channels found matching \""+query+"\":";
+        String out = " \""+query+"\" 에 일치하는 여러 음성 채널이 있네요!\n음성 채널들:";
         for(int i=0; i<6 && i<list.size(); i++)
             out+="\n - "+list.get(i).getName()+" (<#"+list.get(i).getId()+">)";
         if(list.size()>6)
-            out+="\n**And "+(list.size()-6)+" more...**";
+            out+="\n**와 "+(list.size()-6)+" 개 더 있어요...**";
         return out;
     }
     
     public static String listOfVChannels(List<VoiceChannel> list, String query)
     {
-        String out = " Multiple voice channels found matching \""+query+"\":";
+        String out = " \""+query+"\" 에 일치하는 여러 음성 채널이 있네요!\n음성 채널들:";
         for(int i=0; i<6 && i<list.size(); i++)
             out+="\n - "+list.get(i).getName()+" (ID:"+list.get(i).getId()+")";
         if(list.size()>6)
-            out+="\n**And "+(list.size()-6)+" more...**";
+            out+="\n**와 "+(list.size()-6)+" 개 더 있어요...**";
         return out;
     }
     
     public static String listOfRoles(List<Role> list, String query)
     {
-        String out = " Multiple text channels found matching \""+query+"\":";
+        String out = " \""+query+"\" 에 일치하는 여러 텍스트 채널이 있네요!\n음성 채널들:";
         for(int i=0; i<6 && i<list.size(); i++)
             out+="\n - "+list.get(i).getName()+" (ID:"+list.get(i).getId()+")";
         if(list.size()>6)
-            out+="\n**And "+(list.size()-6)+" more...**";
+            out+="\n**와"+(list.size()-6)+" 개 더 있어요...**";
         return out;
     }
     

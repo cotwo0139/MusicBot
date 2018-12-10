@@ -36,8 +36,8 @@ public class PlaylistCmd extends OwnerCommand
         this.bot = bot;
         this.guildOnly = false;
         this.name = "playlist";
-        this.arguments = "<append|delete|make|setdefault>";
-        this.help = "playlist management";
+        this.arguments = "<append|delete|make|setdefault> <수정|삭제|생성|기본설정>";
+        this.help = "재생 목록 관리";
         this.children = new OwnerCommand[]{
             new ListCmd(),
             new AppendlistCmd(),
@@ -50,7 +50,7 @@ public class PlaylistCmd extends OwnerCommand
     @Override
     public void execute(CommandEvent event) 
     {
-        StringBuilder builder = new StringBuilder(event.getClient().getWarning()+" Playlist Management Commands:\n");
+        StringBuilder builder = new StringBuilder(event.getClient().getWarning()+" 재생 목록 관리 명령어:\n");
         for(Command cmd: this.children)
             builder.append("\n`").append(event.getClient().getPrefix()).append(name).append(" ").append(cmd.getName())
                     .append(" ").append(cmd.getArguments()==null ? "" : cmd.getArguments()).append("` - ").append(cmd.getHelp());
@@ -62,9 +62,9 @@ public class PlaylistCmd extends OwnerCommand
         public MakelistCmd()
         {
             this.name = "make";
-            this.aliases = new String[]{"create"};
-            this.help = "makes a new playlist";
-            this.arguments = "<name>";
+            this.aliases = new String[]{"create","생성"};
+            this.help = "새로운 재생 목록을 만들어요!";
+            this.arguments = "<이름>";
             this.guildOnly = false;
         }
 
@@ -77,15 +77,15 @@ public class PlaylistCmd extends OwnerCommand
                 try
                 {
                     bot.getPlaylistLoader().createPlaylist(pname);
-                    event.reply(event.getClient().getSuccess()+" Successfully created playlist `"+pname+"`!");
+                    event.reply(event.getClient().getSuccess()+" 재생 목록 `"+pname+"` 이(가) 성공적으로 생성되었어요!");
                 }
                 catch(IOException e)
                 {
-                    event.reply(event.getClient().getError()+" I was unable to create the playlist: "+e.getLocalizedMessage());
+                    event.reply(event.getClient().getError()+" 재생 목록을 만들지 못했어요..: "+e.getLocalizedMessage());
                 }
             }
             else
-                event.reply(event.getClient().getError()+" Playlist `"+pname+"` already exists!");
+                event.reply(event.getClient().getError()+" 재생 목록 `"+pname+"` 이(가) 이미 존재해요!");
         }
     }
     
@@ -94,8 +94,8 @@ public class PlaylistCmd extends OwnerCommand
         public DeletelistCmd()
         {
             this.name = "delete";
-            this.aliases = new String[]{"remove"};
-            this.help = "deletes an existing playlist";
+            this.aliases = new String[]{"remove","삭제"};
+            this.help = "존재하는 재생 목록을 지워요!";
             this.arguments = "<name>";
             this.guildOnly = false;
         }
@@ -105,17 +105,17 @@ public class PlaylistCmd extends OwnerCommand
         {
             String pname = event.getArgs().replaceAll("\\s+", "_");
             if(bot.getPlaylistLoader().getPlaylist(pname)==null)
-                event.reply(event.getClient().getError()+" Playlist `"+pname+"` doesn't exist!");
+                event.reply(event.getClient().getError()+" 재생 목록 `"+pname+"` 이(가) 존재하지 않아요!");
             else
             {
                 try
                 {
                     bot.getPlaylistLoader().deletePlaylist(pname);
-                    event.reply(event.getClient().getSuccess()+" Successfully deleted playlist `"+pname+"`!");
+                    event.reply(event.getClient().getSuccess()+" 재생 목록 `"+pname+"` 을 지웠어요!");
                 }
                 catch(IOException e)
                 {
-                    event.reply(event.getClient().getError()+" I was unable to delete the playlist: "+e.getLocalizedMessage());
+                    event.reply(event.getClient().getError()+" 재생 목록을 지울수 없어요..: "+e.getLocalizedMessage());
                 }
             }
         }
@@ -126,9 +126,9 @@ public class PlaylistCmd extends OwnerCommand
         public AppendlistCmd()
         {
             this.name = "append";
-            this.aliases = new String[]{"add"};
-            this.help = "appends songs to an existing playlist";
-            this.arguments = "<name> <URL> | <URL> | ...";
+            this.aliases = new String[]{"add","수정"};
+            this.help = "사용 가능한 재생 목록을 수정해요!";
+            this.arguments = "<재생목록 이름> <주소> | <주소> | ...";
             this.guildOnly = false;
         }
 
@@ -138,13 +138,13 @@ public class PlaylistCmd extends OwnerCommand
             String[] parts = event.getArgs().split("\\s+", 2);
             if(parts.length<2)
             {
-                event.reply(event.getClient().getError()+" Please include a playlist name and URLs to add!");
+                event.reply(event.getClient().getError()+" 재생 목록 이름과 주소를 포함해주세요!");
                 return;
             }
             String pname = parts[0];
             Playlist playlist = bot.getPlaylistLoader().getPlaylist(pname);
             if(playlist==null)
-                event.reply(event.getClient().getError()+" Playlist `"+pname+"` doesn't exist!");
+                event.reply(event.getClient().getError()+" 재생 목록 `"+pname+"` 이(가) 존재하지 않아요!");
             else
             {
                 StringBuilder builder = new StringBuilder();
@@ -160,11 +160,11 @@ public class PlaylistCmd extends OwnerCommand
                 try
                 {
                     bot.getPlaylistLoader().writePlaylist(pname, builder.toString());
-                    event.reply(event.getClient().getSuccess()+" Successfully added "+urls.length+" items to playlist `"+pname+"`!");
+                    event.reply(event.getClient().getSuccess()+" 성공적으로 "+urls.length+" 개의 항목을 재생 목록 `"+pname+"` 에 추가했어요!");
                 }
                 catch(IOException e)
                 {
-                    event.reply(event.getClient().getError()+" I was unable to append to the playlist: "+e.getLocalizedMessage());
+                    event.reply(event.getClient().getError()+" 재생 목록에 추가할수 없어요.. : "+e.getLocalizedMessage());
                 }
             }
         }
@@ -176,8 +176,8 @@ public class PlaylistCmd extends OwnerCommand
         {
             super(bot);
             this.name = "setdefault";
-            this.aliases = new String[]{"default"};
-            this.arguments = "<playlistname|NONE>";
+            this.aliases = new String[]{"default","기본설정"};
+            this.arguments = "<재생목록 이름|없음>";
             this.guildOnly = true;
         }
     }
@@ -188,7 +188,7 @@ public class PlaylistCmd extends OwnerCommand
         {
             this.name = "all";
             this.aliases = new String[]{"available","list"};
-            this.help = "lists all available playlists";
+            this.help = "사용 가능한 재생 목록를 모두 보여줘요!";
             this.guildOnly = true;
         }
 
@@ -199,17 +199,17 @@ public class PlaylistCmd extends OwnerCommand
                 bot.getPlaylistLoader().createFolder();
             if(!bot.getPlaylistLoader().folderExists())
             {
-                event.reply(event.getClient().getWarning()+" Playlists folder does not exist and could not be created!");
+                event.reply(event.getClient().getWarning()+" 재생 목록 폴더가 없어요!");
                 return;
             }
             List<String> list = bot.getPlaylistLoader().getPlaylistNames();
             if(list==null)
-                event.reply(event.getClient().getError()+" Failed to load available playlists!");
+                event.reply(event.getClient().getError()+" 사용 가능한 재생 목록을 불러오는데 실패했어요!");
             else if(list.isEmpty())
-                event.reply(event.getClient().getWarning()+" There are no playlists in the Playlists folder!");
+                event.reply(event.getClient().getWarning()+" 재생 목록 폴더에 아무 재생 목록도 없어요!");
             else
             {
-                StringBuilder builder = new StringBuilder(event.getClient().getSuccess()+" Available playlists:\n");
+                StringBuilder builder = new StringBuilder(event.getClient().getSuccess()+" 사용 가능한 재생 목록:\n");
                 list.forEach(str -> builder.append("`").append(str).append("` "));
                 event.reply(builder.toString());
             }

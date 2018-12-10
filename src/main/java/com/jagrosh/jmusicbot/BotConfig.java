@@ -108,13 +108,13 @@ public class BotConfig
             // validate bot token
             if(token==null || token.isEmpty() || token.equalsIgnoreCase("BOT_TOKEN_HERE"))
             {
-                token = prompt.prompt("Please provide a bot token."
-                        + "\nInstructions for obtaining a token can be found here:"
+                token = prompt.prompt("봇 토큰을 입력해 주십시오."
+                        + "\n봇 토큰을 얻기 위한 지침은 다음에서 찾을 수 있습니다."
                         + "\nhttps://github.com/jagrosh/MusicBot/wiki/Getting-a-Bot-Token."
-                        + "\nBot Token: ");
+                        + "\n봇 토큰: ");
                 if(token==null)
                 {
-                    prompt.alert(Prompt.Level.WARNING, CONTEXT, "No token provided! Exiting.");
+                    prompt.alert(Prompt.Level.WARNING, CONTEXT, "토큰이 입력되지 않았습니다!. 종료합니다.");
                     return;
                 }
                 else
@@ -128,11 +128,11 @@ public class BotConfig
             {
                 try
                 {
-                    owner = Long.parseLong(prompt.prompt("Owner ID was missing, or the provided owner ID is not valid."
-                        + "\nPlease provide the User ID of the bot's owner."
-                        + "\nInstructions for obtaining your User ID can be found here:"
+                    owner = Long.parseLong(prompt.prompt("봇 주인의 ID 가 없습니다"
+                        + "\n봇 소유자의 사용자 ID를 입력하십시오"
+                        + "\n사용자 ID를 얻기위한 지침은 다음에서 찾을 수 있습니다:"
                         + "\nhttps://github.com/jagrosh/MusicBot/wiki/Finding-Your-User-ID"
-                        + "\nOwner User ID: "));
+                        + "\n소유자 사용자 ID: "));
                 }
                 catch(NumberFormatException | NullPointerException ex)
                 {
@@ -140,7 +140,7 @@ public class BotConfig
                 }
                 if(owner<=0)
                 {
-                    prompt.alert(Prompt.Level.ERROR, CONTEXT, "Invalid User ID! Exiting.");
+                    prompt.alert(Prompt.Level.ERROR, CONTEXT, "잘못된 유저 ID입니다!. 종료합니다.");
                     System.exit(0);
                 }
                 else
@@ -159,8 +159,8 @@ public class BotConfig
                 }
                 catch(IOException ex) 
                 {
-                    prompt.alert(Prompt.Level.WARNING, CONTEXT, "Failed to write new config options to config.txt: "+ex
-                        + "\nPlease make sure that the files are not on your desktop or some other restricted area.");
+                    prompt.alert(Prompt.Level.WARNING, CONTEXT, "새로운 config.txt 를 만드는 데에 실해했습니다: "+ex
+                        + "\n파일이 바탕 화면이나 다른 제한된 영역에 있지 않은지 확인하십시오.");
                 }
             }
             

@@ -56,15 +56,15 @@ public class JMusicBot
         Logger log = LoggerFactory.getLogger("Startup");
         
         // create prompt to handle startup
-        Prompt prompt = new Prompt("JMusicBot", "Switching to nogui mode. You can manually start in nogui mode by including the -Dnogui=true flag.", 
+        Prompt prompt = new Prompt("JMusicBot", "nogui 모드로 전환합니다. -Dnogui = true 플래그를 포함시켜 nogui 모드에서 수동으로 시작할 수 있습니다.", 
                 "true".equalsIgnoreCase(System.getProperty("nogui", "false")));
         
         // check deprecated nogui mode (new way of setting it is -Dnogui=true)
         for(String arg: args)
             if("-nogui".equalsIgnoreCase(arg))
             {
-                prompt.alert(Prompt.Level.WARNING, "GUI", "The -nogui flag has been deprecated. "
-                        + "Please use the -Dnogui=true flag before the name of the jar. Example: java -jar -Dnogui=true JMusicBot.jar");
+                prompt.alert(Prompt.Level.WARNING, "GUI", "-nogui 플래그는 더 이상 사용되지 않습니다."
+                        + "jar 이름 앞에 -Dnogui = true 플래그를 사용하십시오. 예 : java -jar -Dnogui=true JMusicBot.jar");
                 break;
             }
         
@@ -83,8 +83,8 @@ public class JMusicBot
         Bot bot = new Bot(waiter, config, settings);
         
         AboutCommand aboutCommand = new AboutCommand(Color.BLUE.brighter(),
-                                "a music bot that is [easy to host yourself!](https://github.com/jagrosh/MusicBot) (v"+version+")",
-                                new String[]{"High-quality music playback", "FairQueue™ Technology", "Easy to host yourself"},
+                                "이 뮤직 봇은 한글화 되었어요! 원 제작 소스는 [클릭해주세요](https://github.com/jagrosh/MusicBot) (v"+version+")",
+                                new String[]{"높은 품질의 음악 재생 기능", "FairQueue™ 기술", "다양한 기능들"},
                                 RECOMMENDED_PERMS);
         aboutCommand.setIsAuthor(false);
         aboutCommand.setReplacementCharacter("\uD83C\uDFB6");
@@ -159,13 +159,13 @@ public class JMusicBot
             } 
             catch(Exception e) 
             {
-                log.error("Could not start GUI. If you are "
-                        + "running on a server or in a location where you cannot display a "
-                        + "window, please run in nogui mode using the -Dnogui=true flag.");
+                log.error("GUI 를 실행하지 못했습니다. 혹시"
+                        + "서버용 OS 에서 실행하고 있는지 확인해주세요."
+                        + "서버에서 사용하실 때에는 -Dnogui=true 플래그를 사용해 주세요.");
             }
         }
         
-        log.info("Loaded config from "+config.getConfigLocation());
+        log.info("콘피그를 "+config.getConfigLocation()+" 에서 불러오고 있습니다...");
         
         // attempt to log in and start
         try
@@ -173,7 +173,7 @@ public class JMusicBot
             JDA jda = new JDABuilder(AccountType.BOT)
                     .setToken(config.getToken())
                     .setAudioEnabled(true)
-                    .setGame(nogame ? null : Game.playing("loading..."))
+                    .setGame(nogame ? null : Game.playing("로딩중..."))
                     .setStatus(config.getStatus()==OnlineStatus.INVISIBLE||config.getStatus()==OnlineStatus.OFFLINE ? OnlineStatus.INVISIBLE : OnlineStatus.DO_NOT_DISTURB)
                     .addEventListener(client, waiter, new Listener(bot))
                     .setBulkDeleteSplittingEnabled(true)
@@ -182,14 +182,14 @@ public class JMusicBot
         }
         catch (LoginException ex)
         {
-            log.error(ex+"\nPlease make sure you are "
-                    + "editing the correct config.txt file, and that you have used the "
-                    + "correct token (not the 'secret'!)");
+            log.error(ex+"\nconfig.txt 파일을 수정해 주세요"
+                    + "그리고 정확한 토큰을 입력해주세요"
+                    + "정확한 \"Token\" 을 입력해주세요 (\"Secret\" 이 아닙니다!!)");
             System.exit(1);
         }
         catch(IllegalArgumentException ex)
         {
-            log.error("Some aspect of the configuration is invalid: "+ex);
+            log.error("다음의 설정이 존재하지 않습니다: "+ex);
             System.exit(1);
         }
     }

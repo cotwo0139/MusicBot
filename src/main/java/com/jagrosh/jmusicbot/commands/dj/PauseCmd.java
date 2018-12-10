@@ -30,7 +30,7 @@ public class PauseCmd extends DJCommand
     {
         super(bot);
         this.name = "pause";
-        this.help = "pauses the current song";
+        this.help = "현재 곡을 일시 정지시켜요!";
         this.bePlaying = true;
     }
 
@@ -40,10 +40,10 @@ public class PauseCmd extends DJCommand
         AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
         if(handler.getPlayer().isPaused())
         {
-            event.replyWarning("The player is already paused! Use `"+event.getClient().getPrefix()+"play` to unpause!");
+            event.replyWarning(" 현재 곡이 일시 정지 상태에요! `"+event.getClient().getPrefix()+"play` 로 일시 정지를 해제하실수 있어요!");
             return;
         }
         handler.getPlayer().setPaused(true);
-        event.replySuccess("Paused **"+handler.getPlayer().getPlayingTrack().getInfo().title+"**. Type `"+event.getClient().getPrefix()+"play` to unpause!");
+        event.replySuccess("**"+handler.getPlayer().getPlayingTrack().getInfo().title+"** 곡을 일시 중지시켰어요! `"+event.getClient().getPrefix()+"play` 로 일시 정지를 해제하실수 있어요!");
     }
 }

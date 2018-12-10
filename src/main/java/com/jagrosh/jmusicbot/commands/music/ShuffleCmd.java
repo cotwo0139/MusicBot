@@ -33,6 +33,7 @@ public class ShuffleCmd extends MusicCommand
         this.help = "shuffles songs you have added";
         this.beListening = true;
         this.bePlaying = true;
+        this.aliases = new String[]{"셔플","혼합","섞기"};
     }
 
     @Override
@@ -43,13 +44,13 @@ public class ShuffleCmd extends MusicCommand
         switch (s) 
         {
             case 0:
-                event.replyError("You don't have any music in the queue to shuffle!");
+                event.replyError("셔플할 음악이 없어요..");
                 break;
             case 1:
-                event.replyWarning("You only have one song in the queue!");
+                event.replyWarning("대기열에 음악이 1개밖에 존재하지 않아요..");
                 break;
             default:
-                event.replySuccess("You successfully shuffled your "+s+" entries.");
+                event.replySuccess("성공적으로 당신의 "+s+" 개의 노래를 셔플했어요!");
                 break;
         }
     }

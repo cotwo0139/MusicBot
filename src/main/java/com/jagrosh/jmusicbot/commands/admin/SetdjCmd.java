@@ -32,8 +32,8 @@ public class SetdjCmd extends AdminCommand
     public SetdjCmd()
     {
         this.name = "setdj";
-        this.help = "sets the DJ role for certain music commands";
-        this.arguments = "<rolename|NONE>";
+        this.help = "DJ 역할을 설정해요!";
+        this.arguments = "<역할 이름|없음>";
     }
     
     @Override
@@ -41,26 +41,26 @@ public class SetdjCmd extends AdminCommand
     {
         if(event.getArgs().isEmpty())
         {
-            event.reply(event.getClient().getError()+" Please include a role name or NONE");
+            event.reply(event.getClient().getError()+" 역할 이름이나 역할, 또는 ``없음`` 을 입력해주세요!");
             return;
         }
         Settings s = event.getClient().getSettingsFor(event.getGuild());
-        if(event.getArgs().equalsIgnoreCase("none"))
+        if(event.getArgs().equalsIgnoreCase("없음"))
         {
             s.setDJRole(null);
-            event.reply(event.getClient().getSuccess()+" DJ role cleared; Only Admins can use the DJ commands.");
+            event.reply(event.getClient().getSuccess()+" DJ 역할이 지워졌어요! 오로지 관리자만 DJ명령어를 사용할수 있어요!");
         }
         else
         {
             List<Role> list = FinderUtil.findRoles(event.getArgs(), event.getGuild());
             if(list.isEmpty())
-                event.reply(event.getClient().getWarning()+" No Roles found matching \""+event.getArgs()+"\"");
+                event.reply(event.getClient().getWarning()+" \""+event.getArgs()+"\" 에 맞는 역할을 찾지 못했어요!");
             else if (list.size()>1)
                 event.reply(event.getClient().getWarning()+FormatUtil.listOfRoles(list, event.getArgs()));
             else
             {
                 s.setDJRole(list.get(0));
-                event.reply(event.getClient().getSuccess()+" DJ commands can now be used by users with the **"+list.get(0).getName()+"** role.");
+                event.reply(event.getClient().getSuccess()+" 이제 DJ 명령어는 **"+list.get(0).getName()+"** 역할이 있는 유저만 사용 가능해요!");
             }
         }
     }

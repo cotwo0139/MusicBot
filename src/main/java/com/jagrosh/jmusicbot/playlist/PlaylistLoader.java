@@ -170,7 +170,7 @@ public class PlaylistLoader
                         public void trackLoaded(AudioTrack at) 
                         {
                             if(config.isTooLong(at))
-                                errors.add(new PlaylistLoadError(index, items.get(index), "This track is longer than the allowed maximum"));
+                                errors.add(new PlaylistLoadError(index, items.get(index), "이 곡은 허용된 길이보다 길어요!"));
                             else
                             {
                                 at.setUserData(0L);
@@ -187,7 +187,7 @@ public class PlaylistLoader
                             if(ap.isSearchResult())
                             {
                                 if(config.isTooLong(ap.getTracks().get(0)))
-                                    errors.add(new PlaylistLoadError(index, items.get(index), "This track is longer than the allowed maximum"));
+                                    errors.add(new PlaylistLoadError(index, items.get(index), "이 곡은 허용된 길이보다 길어요!"));
                                 else
                                 {
                                     ap.getTracks().get(0).setUserData(0L);
@@ -198,7 +198,7 @@ public class PlaylistLoader
                             else if(ap.getSelectedTrack()!=null)
                             {
                                 if(config.isTooLong(ap.getSelectedTrack()))
-                                    errors.add(new PlaylistLoadError(index, items.get(index), "This track is longer than the allowed maximum"));
+                                    errors.add(new PlaylistLoadError(index, items.get(index), "이 곡은 허용된 길이보다 길어요!"));
                                 else
                                 {
                                     ap.getSelectedTrack().setUserData(0L);
@@ -229,7 +229,7 @@ public class PlaylistLoader
                         @Override
                         public void noMatches() 
                         {
-                            errors.add(new PlaylistLoadError(index, items.get(index), "No matches found."));
+                            errors.add(new PlaylistLoadError(index, items.get(index), "맞는 결과가 없어요!"));
                             if(last && callback!=null)
                                 callback.run();
                         }
@@ -237,7 +237,7 @@ public class PlaylistLoader
                         @Override
                         public void loadFailed(FriendlyException fe) 
                         {
-                            errors.add(new PlaylistLoadError(index, items.get(index), "Failed to load track: "+fe.getLocalizedMessage()));
+                            errors.add(new PlaylistLoadError(index, items.get(index), "곡을  불러오는데 실패했어요: "+fe.getLocalizedMessage()));
                             if(last && callback!=null)
                                 callback.run();
                         }

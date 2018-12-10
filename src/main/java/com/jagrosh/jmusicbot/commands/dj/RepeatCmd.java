@@ -30,8 +30,8 @@ public class RepeatCmd extends DJCommand
     {
         super(bot);
         this.name = "repeat";
-        this.help = "re-adds music to the queue when finished";
-        this.arguments = "[on|off]";
+        this.help = "전채 반복을 활성화시거나 비활성화 해요!";
+        this.arguments = "[on|off], [활성화|비활성화]";
         this.guildOnly = true;
     }
     
@@ -45,21 +45,21 @@ public class RepeatCmd extends DJCommand
         {
             value = !settings.getRepeatMode();
         }
-        else if(event.getArgs().equalsIgnoreCase("true") || event.getArgs().equalsIgnoreCase("on"))
+        else if(event.getArgs().equalsIgnoreCase("true") || event.getArgs().equalsIgnoreCase("on") || event.getArgs().equalsIgnoreCase("활성화"))
         {
             value = true;
         }
-        else if(event.getArgs().equalsIgnoreCase("false") || event.getArgs().equalsIgnoreCase("off"))
+        else if(event.getArgs().equalsIgnoreCase("false") || event.getArgs().equalsIgnoreCase("off") || event.getArgs().equalsIgnoreCase("비활성화"))
         {
             value = false;
         }
         else
         {
-            event.replyError("Valid options are `on` or `off` (or leave empty to toggle)");
+            event.replyError("정확한 옵션을 입력해주세요! `on` `off` (비우면 토글 가능)");
             return;
         }
         settings.setRepeatMode(value);
-        event.replySuccess("Repeat mode is now `"+(value ? "ON" : "OFF")+"`");
+        event.replySuccess("반복 모드가 **"+(value ? "활성" : "비활성")+"화** 되었어요!");
     }
 
     @Override

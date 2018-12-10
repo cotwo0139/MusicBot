@@ -32,8 +32,8 @@ public class VolumeCmd extends DJCommand
     {
         super(bot);
         this.name = "volume";
-        this.aliases = new String[]{"vol"};
-        this.help = "sets or shows volume";
+        this.aliases = new String[]{"vol","볼륨"};
+        this.help = "볼륨을 설정하거나 볼륨을 볼수 있어요!";
         this.arguments = "[0-150]";
     }
 
@@ -45,7 +45,7 @@ public class VolumeCmd extends DJCommand
         int volume = handler.getPlayer().getVolume();
         if(event.getArgs().isEmpty())
         {
-            event.reply(FormatUtil.volumeIcon(volume)+" Current volume is `"+volume+"`");
+            event.reply(FormatUtil.volumeIcon(volume)+" 현재 볼륨은 `"+volume+"` 이예요!");
         }
         else
         {
@@ -56,12 +56,12 @@ public class VolumeCmd extends DJCommand
                 nvolume = -1;
             }
             if(nvolume<0 || nvolume>150)
-                event.reply(event.getClient().getError()+" Volume must be a valid integer between 0 and 150!");
+                event.reply(event.getClient().getError()+" 볼륨은 정수여야 하고 0 부터 150 사이여야 해요!");
             else
             {
                 handler.getPlayer().setVolume(nvolume);
                 settings.setVolume(nvolume);
-                event.reply(FormatUtil.volumeIcon(nvolume)+" Volume changed from `"+volume+"` to `"+nvolume+"`");
+                event.reply(FormatUtil.volumeIcon(nvolume)+" 볼륨이 `"+volume+"` 에서 `"+nvolume+"` 로 변경되었어요!");
             }
         }
     }

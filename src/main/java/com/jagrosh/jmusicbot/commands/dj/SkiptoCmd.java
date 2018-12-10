@@ -30,9 +30,9 @@ public class SkiptoCmd extends DJCommand
     {
         super(bot);
         this.name = "skipto";
-        this.help = "skips to the specified song";
-        this.arguments = "<position>";
-        this.aliases = new String[]{"jumpto"};
+        this.help = "선택한 곡으로 건너뛰어요!";
+        this.arguments = "<위치>";
+        this.aliases = new String[]{"jumpto","점프"};
         this.bePlaying = true;
     }
 
@@ -46,17 +46,17 @@ public class SkiptoCmd extends DJCommand
         }
         catch(NumberFormatException e)
         {
-            event.reply(event.getClient().getError()+" `"+event.getArgs()+"` is not a valid integer!");
+            event.reply(event.getClient().getError()+" `"+event.getArgs()+"` 는 정수가 아니에요!");
             return;
         }
         AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
         if(index<1 || index>handler.getQueue().size())
         {
-            event.reply(event.getClient().getError()+" Position must be a valid integer between 1 and "+handler.getQueue().size()+"!");
+            event.reply(event.getClient().getError()+" 위지는 정수이거나 1부터 "+handler.getQueue().size()+"까지만 가능해요!");
             return;
         }
         handler.getQueue().skip(index-1);
-        event.reply(event.getClient().getSuccess()+" Skipped to **"+handler.getQueue().get(0).getTrack().getInfo().title+"**");
+        event.reply(event.getClient().getSuccess()+" **"+handler.getQueue().get(0).getTrack().getInfo().title+"** 곡으로 건너뛰었어요!");
         handler.getPlayer().stopTrack();
     }
 }

@@ -34,9 +34,9 @@ public class RemoveCmd extends MusicCommand
     {
         super(bot);
         this.name = "remove";
-        this.help = "removes a song from the queue";
-        this.arguments = "<position|ALL>";
-        this.aliases = new String[]{"delete"};
+        this.help = "대기열에서 노래를 지워요!";
+        this.arguments = "<위치|모두>";
+        this.aliases = new String[]{"delete","삭제"};
         this.beListening = true;
         this.bePlaying = true;
     }
@@ -47,16 +47,16 @@ public class RemoveCmd extends MusicCommand
         AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
         if(handler.getQueue().isEmpty())
         {
-            event.replyError("There is nothing in the queue!");
+            event.replyError("대기열에 아무 노래도 존재하지 않아요!");
             return;
         }
-        if(event.getArgs().equalsIgnoreCase("all"))
+        if(event.getArgs().equalsIgnoreCase("모두") || event.getArgs().equalsIgnoreCase("모두"))
         {
             int count = handler.getQueue().removeAll(event.getAuthor().getIdLong());
             if(count==0)
-                event.replyWarning("You don't have any songs in the queue!");
+                event.replyWarning("아무 노래도 대기열에 존재하지 않아요!");
             else
-                event.replySuccess("Successfully removed your "+count+" entries.");
+                event.replySuccess("성공적으로 "+count+" 개의 노래를 지웠어요!");
             return;
         }
         int pos;
@@ -67,7 +67,7 @@ public class RemoveCmd extends MusicCommand
         }
         if(pos<1 || pos>handler.getQueue().size())
         {
-            event.replyError("Position must be a valid integer between 1 and "+handler.getQueue().size()+"!");
+            event.replyError("위치는 1 부터 "+handler.getQueue().size()+" 까지의 정수여야 해요!");
             return;
         }
         Settings settings = event.getClient().getSettingsFor(event.getGuild());
@@ -78,7 +78,7 @@ public class RemoveCmd extends MusicCommand
         if(qt.getIdentifier()==event.getAuthor().getIdLong())
         {
             handler.getQueue().remove(pos-1);
-            event.replySuccess("Removed **"+qt.getTrack().getInfo().title+"** from the queue");
+            event.replySuccess("**"+qt.getTrack().getInfo().title+"** 을(를) 대기열에서 지웠어요!");
         }
         else if(isDJ)
         {
@@ -89,12 +89,12 @@ public class RemoveCmd extends MusicCommand
             } catch(Exception e) {
                 u = null;
             }
-            event.replySuccess("Removed **"+qt.getTrack().getInfo().title
-                    +"** from the queue (requested by "+(u==null ? "someone" : "**"+u.getName()+"**")+")");
+            event.replySuccess("**"+qt.getTrack().getInfo().title
+                    +"** 을(를) 대기열에서 지워요! (신청자: "+(u==null ? "누군가" : "**"+u.getName()+"**")+")");
         }
         else
         {
-            event.replyError("You cannot remove **"+qt.getTrack().getInfo().title+"** because you didn't add it!");
+            event.replyError("당신은 이 노래 **"+qt.getTrack().getInfo().title+"** 을(를) 추가하지 않으셔서 지우실수 없어요!");
         }
     }
 }

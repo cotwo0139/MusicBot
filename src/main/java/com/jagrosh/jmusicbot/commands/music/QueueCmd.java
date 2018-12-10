@@ -43,8 +43,8 @@ public class QueueCmd extends MusicCommand
         super(bot);
         this.name = "queue";
         this.help = "shows the current queue";
-        this.arguments = "[pagenum]";
-        this.aliases = new String[]{"list"};
+        this.arguments = "[페이지 번호]";
+        this.aliases = new String[]{"list","재생목록","큐","목록"};
         this.bePlaying = true;
         this.botPermissions = new Permission[]{Permission.MESSAGE_ADD_REACTION,Permission.MESSAGE_EMBED_LINKS};
         builder = new Paginator.Builder()
@@ -74,7 +74,7 @@ public class QueueCmd extends MusicCommand
             Message nowp = ah.getNowPlaying(event.getJDA());
             Message nonowp = ah.getNoMusicPlaying(event.getJDA());
             Message built = new MessageBuilder()
-                    .setContent(event.getClient().getWarning() + " There is no music in the queue!")
+                    .setContent(event.getClient().getWarning() + " 대기열에 아무 노래도 없어요!")
                     .setEmbed((nowp==null ? nonowp : nowp).getEmbeds().get(0)).build();
             event.reply(built, m -> 
             {
@@ -108,8 +108,8 @@ public class QueueCmd extends MusicCommand
             sb.append(ah.getPlayer().isPaused() ? JMusicBot.PAUSE_EMOJI : JMusicBot.PLAY_EMOJI).append(" **")
                     .append(ah.getPlayer().getPlayingTrack().getInfo().title).append("**\n");
         }
-        return FormatUtil.filter(sb.append(success).append(" Current Queue | ").append(songslength)
-                .append(" entries | `").append(FormatUtil.formatTime(total)).append("` ")
+        return FormatUtil.filter(sb.append(success).append(" 현재 대기열 | ").append(songslength)
+                .append(" 개 | `").append(FormatUtil.formatTime(total)).append("` ")
                 .append(repeatmode ? "| \uD83D\uDD01" : "").toString());
     }
 }

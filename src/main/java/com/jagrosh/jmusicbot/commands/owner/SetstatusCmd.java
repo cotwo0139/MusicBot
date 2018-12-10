@@ -28,8 +28,8 @@ public class SetstatusCmd extends OwnerCommand
     public SetstatusCmd()
     {
         this.name = "setstatus";
-        this.help = "sets the status the bot displays";
-        this.arguments = "<status>";
+        this.help = "봇의 상태를 설정합니다";
+        this.arguments = "<ONLINE | IDLE | DND | INVISIBLE>";
         this.guildOnly = false;
     }
     
@@ -40,15 +40,15 @@ public class SetstatusCmd extends OwnerCommand
             OnlineStatus status = OnlineStatus.fromKey(event.getArgs());
             if(status==OnlineStatus.UNKNOWN)
             {
-                event.replyError("Please include one of the following statuses: `ONLINE`, `IDLE`, `DND`, `INVISIBLE`");
+                event.replyError("`ONLINE`, `IDLE`, `DND`, `INVISIBLE` 중 1개를 포함해주세요!");
             }
             else
             {
                 event.getJDA().getPresence().setStatus(status);
-                event.replySuccess("Set the status to `"+status.getKey().toUpperCase()+"`");
+                event.replySuccess("상태가 `"+status.getKey().toUpperCase()+"` 로 설정되었어요!");
             }
         } catch(Exception e) {
-            event.reply(event.getClient().getError()+" The status could not be set!");
+            event.reply(event.getClient().getError()+" 상태가 설정되지 않았어요!");
         }
     }
 }

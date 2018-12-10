@@ -79,7 +79,7 @@ public class FormatUtil {
     
     public static String listOfTChannels(List<TextChannel> list, String query)
     {
-        String out = " \""+query+"\" 에 일치하는 여러 음성 채널이 있네요!\n음성 채널들:";
+        String out = " \""+query+"\" 에 일치하는 여러 텍스트 채널이 있네요!\n텍스트 채널들:";
         for(int i=0; i<6 && i<list.size(); i++)
             out+="\n - "+list.get(i).getName()+" (<#"+list.get(i).getId()+">)";
         if(list.size()>6)
@@ -99,7 +99,7 @@ public class FormatUtil {
     
     public static String listOfRoles(List<Role> list, String query)
     {
-        String out = " \""+query+"\" 에 일치하는 여러 텍스트 채널이 있네요!\n음성 채널들:";
+        String out = " \""+query+"\" 에 일치하는 여러 역할들이 있네요!\n역할들:";
         for(int i=0; i<6 && i<list.size(); i++)
             out+="\n - "+list.get(i).getName()+" (ID:"+list.get(i).getId()+")";
         if(list.size()>6)

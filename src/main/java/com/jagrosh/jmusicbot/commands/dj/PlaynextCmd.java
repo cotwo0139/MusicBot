@@ -85,7 +85,7 @@ public class PlaynextCmd extends DJCommand
             AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
             int pos = handler.addTrackToFront(new QueuedTrack(track, event.getAuthor()))+1;
             String addMsg = FormatUtil.filter(event.getClient().getSuccess()+" **"+track.getInfo().title
-                    +"** 곡이 (`"+FormatUtil.formatTime(track.getDuration())+"`) "+(pos==0? "곧 재생돼요!":" 위치 "+pos+"에 등록되었어요!"));
+                    +"** (`"+FormatUtil.formatTime(track.getDuration())+"`) 이(가) "+(pos==0? "곧 재생돼요!":"대기열 "+pos+" 번에 위치되었어요!"));
             m.editMessage(addMsg).queue();
         }
         
